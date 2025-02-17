@@ -203,33 +203,30 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        flatpickr("#date-range", {
-            mode: "range",
-            dateFormat: "d/m/Y",
-            defaultDate: ["01/01/2012", "17/02/2025"],
-        });
+       const scrollContainer = document.querySelector('.scroll-container');
+const profitElement = document.getElementById('profit');
 
-        document.querySelector('.apply').addEventListener('click', function() {
-            const profitElement = document.getElementById('profit');
-            const randomProfit = (Math.random() * 10000).toFixed(4);
-            profitElement.textContent = randomProfit;
-        });
+scrollContainer.addEventListener('scroll', () => {
+    const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+    const scrollPercentage = scrollContainer.scrollLeft / maxScrollLeft;
+    
+    // Generate profit value based on scroll position
+    const minProfit = 0.0000;
+    const maxProfit = 10000.0000;
+    const newProfit = (minProfit + scrollPercentage * (maxProfit - minProfit)).toFixed(4);
+    
+    profitElement.textContent = newProfit;
+});
 
-        document.querySelector('.reset').addEventListener('click', function() {
-            document.getElementById('profit').textContent = '0.0000';
-        });
+// Click event for left and right arrows
+document.querySelector('.scroll-arrow:first-child').addEventListener('click', () => {
+    scrollContainer.scrollBy({ left: -50, behavior: 'smooth' });
+});
 
-        const scrollLeft = document.querySelector('.scroll-arrow:first-child');
-        const scrollRight = document.querySelector('.scroll-arrow:last-child');
-        const scrollContainer = document.querySelector('.scroll-container');
+document.querySelector('.scroll-arrow:last-child').addEventListener('click', () => {
+    scrollContainer.scrollBy({ left: 50, behavior: 'smooth' });
+});
 
-        scrollLeft.addEventListener('click', () => {
-            scrollContainer.scrollBy({ left: -50, behavior: 'smooth' });
-        });
-
-        scrollRight.addEventListener('click', () => {
-            scrollContainer.scrollBy({ left: 50, behavior: 'smooth' });
-        });
     </script>
 </body>
 </html>
