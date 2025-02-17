@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustMarkets Partners</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+        }
+        .header h1 {
+            color: #007bff;
+            font-size: 20px;
+            margin: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .verification-box {
+            background-color: #e9f5ff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .verification-box button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .reports {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .reports h2 {
+            font-size: 18px;
+        }
+        .tab-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .tab-menu button {
+            padding: 10px;
+            border: none;
+            background-color: #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tab-menu button.active {
+            background-color: black;
+            color: white;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .action-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .action-buttons button.apply {
+            background-color: #007bff;
+            color: white;
+        }
+        .action-buttons button.reset {
+            background-color: #6c757d;
+            color: white;
+        }
+        .profit-display {
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+        }
+        .profit-display #profit {
+            font-size: 16px;
+            color: #000000;
+        }
+        .scroll-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 0;
+            width: 100%;
+            border: px solid #ccc;
+            border-radius: 5px;
+        }
+        .scroll-container span {
+            margin: 0 5px;
+        }
+        .scroll-arrow {
+            font-size: 11px;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+        .scroll-content {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .profit-display div:last-child {
+    font-size: 9px; /* Adjust the size */
+    color: #d0d0d0; /* Change to your desired color */
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JustMarkets <span style="color: black;">Partners</span></h1>
+        <i class="fa fa-bars"></i>
+    </div>
+    
+    <div class="container">
+        <div class="reports">
+            <h2>Reports</h2>
+            <div class="tab-menu">
+                <button>Client List</button>
+                <button class="active">Reward History</button>
+                <button>Client Transactions</button>
+            </div>
+            <label>Payment Date</label>
+            <input type="text" id="date-range" value="01/01/2012 to 17/02/2025" readonly>
+            <label>Client Country</label>
+            <select>
+                <option>All</option>
+            </select>
+            <label>Client ID</label>
+            <select>
+                <option>All</option>
+            </select>
+            <label>Client Account</label>
+            <select>
+                <option>All</option>
+            </select>
+            <label>Client Account Type</label>
+            <select>
+                <option>All</option>
+            </select>
+            <label>Search by Comment</label>
+            <input type="text" placeholder="Q Search">
+            <div class="action-buttons">
+                <button class="apply">Apply</button>
+                <button class="reset">Reset</button>
+            </div>
+            <div class="profit-display">
+                <div class="scroll-container">
+                    <span class="scroll-arrow"><</span>
+                    <span class="scroll-content"><span id="profit">0.0000</span></span>
+                    <span class="scroll-arrow">></span>
+                </div>
+                <div>Volume (USD)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-icon">
+        <i class="fa fa-comment"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#date-range", {
+            mode: "range",
+            dateFormat: "d/m/Y",
+            defaultDate: ["01/01/2012", "17/02/2025"],
+        });
+
+        document.querySelector('.apply').addEventListener('click', function() {
+            const profitElement = document.getElementById('profit');
+            const randomProfit = (Math.random() * 10000).toFixed(4);
+            profitElement.textContent = randomProfit;
+        });
+
+        document.querySelector('.reset').addEventListener('click', function() {
+            document.getElementById('profit').textContent = '0.0000';
+        });
+
+        const scrollLeft = document.querySelector('.scroll-arrow:first-child');
+        const scrollRight = document.querySelector('.scroll-arrow:last-child');
+        const scrollContainer = document.querySelector('.scroll-container');
+
+        scrollLeft.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -50, behavior: 'smooth' });
+        });
+
+        scrollRight.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: 50, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
