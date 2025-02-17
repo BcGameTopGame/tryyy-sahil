@@ -15,16 +15,24 @@
         }
         .header {
             display: flex;
+    align-items: center; /* Align items vertically */
+            display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px;
             background-color: white;
             border-bottom: 1px solid #ddd;
+            display: flex;
+    align-items: center; /* Aligns items vertically */
+    gap: 10px; /* Adds 10px spacing between icon and text */
         }
         .header h1 {
+            margin-left: 35px; /* Add left margin for spacing */
+    text-align: left; /* Align text to the left */
+    flex-grow: 1; /* Push the text to the left */
             color: #007bff;
             font-size: 20px;
-            margin: 0;
+           margin-right: 60px;
         }
         .container {
             padding: 20px;
@@ -150,8 +158,9 @@
 </head>
 <body>
     <div class="header">
-        <h1>JustMarkets <span style="color: black;">Partners</span></h1>
         <i class="fa fa-bars"></i>
+        <h1>JustMarkets <span style="color: black;">Partners</span></h1>
+        
     </div>
     
     <div class="container">
@@ -203,30 +212,33 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-       const scrollContainer = document.querySelector('.scroll-container');
-const profitElement = document.getElementById('profit');
+        flatpickr("#date-range", {
+            mode: "range",
+            dateFormat: "d/m/Y",
+            defaultDate: ["01/01/2012", "17/02/2025"],
+        });
 
-scrollContainer.addEventListener('scroll', () => {
-    const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-    const scrollPercentage = scrollContainer.scrollLeft / maxScrollLeft;
-    
-    // Generate profit value based on scroll position
-    const minProfit = 0.0000;
-    const maxProfit = 10000.0000;
-    const newProfit = (minProfit + scrollPercentage * (maxProfit - minProfit)).toFixed(4);
-    
-    profitElement.textContent = newProfit;
-});
+        document.querySelector('.apply').addEventListener('click', function() {
+            const profitElement = document.getElementById('profit');
+            const randomProfit = (Math.random() * 10000).toFixed(4);
+            profitElement.textContent = randomProfit;
+        });
 
-// Click event for left and right arrows
-document.querySelector('.scroll-arrow:first-child').addEventListener('click', () => {
-    scrollContainer.scrollBy({ left: -50, behavior: 'smooth' });
-});
+        document.querySelector('.reset').addEventListener('click', function() {
+            document.getElementById('profit').textContent = '0.0000';
+        });
 
-document.querySelector('.scroll-arrow:last-child').addEventListener('click', () => {
-    scrollContainer.scrollBy({ left: 50, behavior: 'smooth' });
-});
+        const scrollLeft = document.querySelector('.scroll-arrow:first-child');
+        const scrollRight = document.querySelector('.scroll-arrow:last-child');
+        const scrollContainer = document.querySelector('.scroll-container');
 
+        scrollLeft.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -50, behavior: 'smooth' });
+        });
+
+        scrollRight.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: 50, behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
