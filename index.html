@@ -40,7 +40,7 @@
             margin-right: 60px;
         }
         .container {
-            padding: 20px;
+            padding: 2px;
         }
         .verification-box {
             background-color: #e9f5ff;
@@ -59,8 +59,8 @@
         }
         .reports {
             background-color: white;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: px;
         }
         .reports h2 {
             font-size: 18px;
@@ -117,7 +117,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: white;
-            font-size: 14px;
+            font-size: 16px;
             color: #333;
             appearance: none; /* Remove default arrow */
             -webkit-appearance: none; /* Remove default arrow for Safari */
@@ -150,12 +150,12 @@
 
         /* Style for the container (optional) */
         .container {
-            max-width: 400px;
-            margin: 0 auto;
+            max-width: 100%;
+            
             padding: 20px;
             background-color: #f8f9fa;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            
         }
 
         /* Label styles */
@@ -313,6 +313,8 @@
         }
        .reports h1{
         color: #000000;
+        font-size: 30px;
+
        }
     </style>
 </head>
@@ -330,8 +332,8 @@
                 <button class="active">Reward History</button>
                 <button>Client Transactions</button>
             </div>
-            <label>Payment Date</label st>
-            <input type="text" id="date-range" value="01/01/2012 to 17/02/2025" readonly>
+            <label>Payment Date</label >
+            <input type="text" id="date-range" value="01/01/2012 to 17/02/2025" readonly style="width:360px">
             <label>Client Country</label>
             <select>
                 <option>All</option>
@@ -349,7 +351,7 @@
                 <option>All</option>
             </select>
             <label>Search by Comment</label>
-            <input type="text" placeholder="Q Search">
+            <input type="text" placeholder="Q Search" style="width: 360px;">
             <div class="action-buttons">
                 <button class="apply">Apply</button>
                 <button class="reset">Reset</button>
