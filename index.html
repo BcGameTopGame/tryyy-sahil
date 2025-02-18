@@ -13,7 +13,7 @@
             padding: 0;
             background-color: #f8f9fa;
         }
-        .header {
+        .header  {
             display: flex;
     align-items: center; /* Align items vertically */
             display: flex;
@@ -26,6 +26,12 @@
     align-items: center; /* Aligns items vertically */
     gap: 10px; /* Adds 10px spacing between icon and text */
         }
+
+
+.header img{
+    margin-right: 60px;
+}
+
         .header h1 {
             margin-left: 35px; /* Add left margin for spacing */
     text-align: left; /* Align text to the left */
@@ -147,7 +153,81 @@
             flex-grow: 1;
             text-align: center;
         }
-
+        .profit-display {
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            border: px solid #ccc;
+            border-radius: 8px;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item {
+            flex: 0 0 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            text-align: center;
+        }
+        .carousel-item p:first-child {
+            font-size: 24px;
+            margin: 0;
+            color: #000;
+        }
+        .carousel-item p:last-child {
+            font-size: 14px;
+            margin: 5px 0 0;
+            color: #888;
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .carousel-arrow.left {
+            left: 10px;
+            color: #000;
+            background: white;
+        }
+        .carousel-arrow.right {
+            right: 10px;
+            color: #000;
+            background: white;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .carousel-dot.active {
+            background-color: #007bff;
+        }
         .profit-display div:last-child {
     font-size: 9px; /* Adjust the size */
     color: #d0d0d0; /* Change to your desired color */
@@ -159,8 +239,7 @@
 <body>
     <div class="header">
         <i class="fa fa-bars"></i>
-        <h1>JustMarkets <span style="color: black;">Partners</span></h1>
-        
+        <img src="top.png" alt="JustMarkets Partners Logo" style="height: 40px; margin-left: 35px;">
     </div>
     
     <div class="container">
@@ -196,12 +275,29 @@
                 <button class="reset">Reset</button>
             </div>
             <div class="profit-display">
-                <div class="scroll-container">
-                    <span class="scroll-arrow"><</span>
-                    <span class="scroll-content"><span id="profit">0.0000</span></span>
-                    <span class="scroll-arrow">></span>
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item" data-index="0">
+                            <p>0.00</p>
+                            <p>Profit (USD)</p>
+                        </div>
+                        <div class="carousel-item" data-index="1">
+                            <p>0.00</p>
+                            <p>Volume (lots)</p>
+                        </div>
+                        <div class="carousel-item" data-index="2">
+                            <p>0.0000</p>
+                            <p>Volume (Mln. USD)</p>
+                        </div>
+                    </div>
+                    <button class="carousel-arrow left" onclick="moveCarousel(-1)">❮</button>
+                    <button class="carousel-arrow right" onclick="moveCarousel(1)">❯</button>
                 </div>
-                <div>Volume (USD)</div>
+                <div class="carousel-dots">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                </div>
             </div>
         </div>
     </div>
