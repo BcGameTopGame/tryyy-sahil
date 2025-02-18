@@ -15,7 +15,7 @@
         }
         .header  {
             display: flex;
-    align-items: center; /* Align items vertically */
+            align-items: center; /* Align items vertically */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -23,22 +23,21 @@
             background-color: white;
             border-bottom: 1px solid #ddd;
             display: flex;
-    align-items: center; /* Aligns items vertically */
-    gap: 10px; /* Adds 10px spacing between icon and text */
+            align-items: center; /* Aligns items vertically */
+            gap: 10px; /* Adds 10px spacing between icon and text */
         }
 
-
-.header img{
-    margin-right: 60px;
-}
+        .header img{
+            margin-right: 60px;
+        }
 
         .header h1 {
             margin-left: 35px; /* Add left margin for spacing */
-    text-align: left; /* Align text to the left */
-    flex-grow: 1; /* Push the text to the left */
+            text-align: left; /* Align text to the left */
+            flex-grow: 1; /* Push the text to the left */
             color: #007bff;
             font-size: 20px;
-           margin-right: 60px;
+            margin-right: 60px;
         }
         .container {
             padding: 20px;
@@ -68,11 +67,13 @@
         }
         .tab-menu {
             display: flex;
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 10px;
+            font-size: 16px; /* Adjust size as needed */
         }
         .tab-menu button {
-            padding: 10px;
+            padding: 7px;
+            font-size: 11px;
             border: none;
             background-color: #ddd;
             border-radius: 5px;
@@ -229,17 +230,15 @@
             background-color: #007bff;
         }
         .profit-display div:last-child {
-    font-size: 9px; /* Adjust the size */
-    color: #d0d0d0; /* Change to your desired color */
-}
-
-
+            font-size: 9px; /* Adjust the size */
+            color: #d0d0d0; /* Change to your desired color */
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <i class="fa fa-bars"></i>
-        <img src="top.png" alt="JustMarkets Partners Logo" style="height: 40px; margin-left: 35px;">
+        <img src="https://firebasestorage.googleapis.com/v0/b/contactform-37fe3.appspot.com/o/top.png?alt=media&token=da96cf43-b9f0-4f28-8921-896a5124f522" alt="JustMarkets Partners Logo" style="height: 40px; margin-left: 35px;">
     </div>
     
     <div class="container">
@@ -314,26 +313,54 @@
             defaultDate: ["01/01/2012", "17/02/2025"],
         });
 
+        let currentIndex = 0;
+        const carouselInner = document.querySelector('.carousel-inner');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+
+        function moveCarousel(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = carouselItems.length - 1;
+            } else if (currentIndex >= carouselItems.length) {
+                currentIndex = 0;
+            }
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselInner.style.transform = `translateX(${offset}%)`;
+            carouselDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
         document.querySelector('.apply').addEventListener('click', function() {
-            const profitElement = document.getElementById('profit');
-            const randomProfit = (Math.random() * 10000).toFixed(4);
-            profitElement.textContent = randomProfit;
+            const profitElement = document.querySelector('.carousel-item[data-index="0"] p:first-child');
+            const volumeLotsElement = document.querySelector('.carousel-item[data-index="1"] p:first-child');
+            const volumeMlnElement = document.querySelector('.carousel-item[data-index="2"] p:first-child');
+
+            profitElement.textContent = (Math.random() * 10000).toFixed(2);
+            volumeLotsElement.textContent = (Math.random() * 1000).toFixed(2);
+            volumeMlnElement.textContent = (Math.random() * 100).toFixed(4);
         });
 
         document.querySelector('.reset').addEventListener('click', function() {
-            document.getElementById('profit').textContent = '0.0000';
+            const profitElement = document.querySelector('.carousel-item[data-index="0"] p:first-child');
+            const volumeLotsElement = document.querySelector('.carousel-item[data-index="1"] p:first-child');
+            const volumeMlnElement = document.querySelector('.carousel-item[data-index="2"] p:first-child');
+
+            profitElement.textContent = '0.00';
+            volumeLotsElement.textContent = '0.00';
+            volumeMlnElement.textContent = '0.0000';
         });
 
-        const scrollLeft = document.querySelector('.scroll-arrow:first-child');
-        const scrollRight = document.querySelector('.scroll-arrow:last-child');
-        const scrollContainer = document.querySelector('.scroll-container');
-
-        scrollLeft.addEventListener('click', () => {
-            scrollContainer.scrollBy({ left: -50, behavior: 'smooth' });
-        });
-
-        scrollRight.addEventListener('click', () => {
-            scrollContainer.scrollBy({ left: 50, behavior: 'smooth' });
+        carouselDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
         });
     </script>
 </body>
