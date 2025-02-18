@@ -70,6 +70,20 @@
             gap: 7px;
             margin-bottom: 10px;
             font-size: 16px; /* Adjust size as needed */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent wrapping of buttons */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #007bff #f8f9fa; /* For Firefox */
+        }
+        .tab-menu::-webkit-scrollbar {
+            height: 8px; /* For Chrome, Safari, and Opera */
+        }
+        .tab-menu::-webkit-scrollbar-thumb {
+            background-color: #007bff; /* For Chrome, Safari, and Opera */
+            border-radius: 4px;
+        }
+        .tab-menu::-webkit-scrollbar-track {
+            background-color: #f8f9fa; /* For Chrome, Safari, and Opera */
         }
         .tab-menu button {
             padding: 10px;
@@ -78,6 +92,7 @@
             background-color: #ddd;
             border-radius: 5px;
             cursor: pointer;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
         }
         .tab-menu button.active {
             background-color: black;
@@ -245,9 +260,12 @@
         <div class="reports">
             <h2>Reports</h2>
             <div class="tab-menu">
+
                 <button>Client List</button>
                 <button class="active">Reward History</button>
                 <button>Client Transactions</button>
+               
+
             </div>
             <label>Payment Date</label>
             <input type="text" id="date-range" value="01/01/2012 to 17/02/2025" readonly>
