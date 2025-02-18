@@ -95,7 +95,7 @@
             flex-shrink: 0; /* Prevent buttons from shrinking */
         }
         .tab-menu button.active {
-            background-color: black;
+            background-color: rgb(67, 66, 66);
             color: white;
         }
         input, select {
@@ -105,6 +105,69 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
+
+
+
+ /* General styles for the select elements */
+ select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 14px;
+            color: #333;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none; /* Remove default arrow for Safari */
+            -moz-appearance: none; /* Remove default arrow for Firefox */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hover and focus styles */
+        select:hover {
+            border-color: #007bff;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        /* Style for the options */
+        select option {
+            padding: 10px;
+            background-color: white;
+            color: #333;
+        }
+
+        /* Style for the container (optional) */
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Label styles */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+            font-weight: bold;
+        }
+
+
         .chat-icon {
             position: fixed;
             bottom: 20px;
@@ -248,26 +311,26 @@
             font-size: 9px; /* Adjust the size */
             color: #d0d0d0; /* Change to your desired color */
         }
+       .reports h1{
+        color: #000000;
+       }
     </style>
 </head>
 <body>
     <div class="header">
         <i class="fa fa-bars"></i>
-        <img src="https://firebasestorage.googleapis.com/v0/b/contactform-37fe3.appspot.com/o/top.png?alt=media&token=da96cf43-b9f0-4f28-8921-896a5124f522" alt="JustMarkets Partners Logo" style="height: 40px; margin-left: 35px;">
+        <img src="https://firebasestorage.googleapis.com/v0/b/contactform-37fe3.appspot.com/o/topimagefor.png?alt=media&token=cfa6796f-d044-4281-83cb-a01e99220717" alt="JustMarkets Partners Logo" style="height: 50px; margin-left: 35px;">
     </div>
     
     <div class="container">
         <div class="reports">
-            <h2>Reports</h2>
+            <h1>Reports</h1>
             <div class="tab-menu">
-                
                 <button>Client List</button>
                 <button class="active">Reward History</button>
                 <button>Client Transactions</button>
-               
-
             </div>
-            <label>Payment Date</label>
+            <label>Payment Date</label st>
             <input type="text" id="date-range" value="01/01/2012 to 17/02/2025" readonly>
             <label>Client Country</label>
             <select>
@@ -336,6 +399,7 @@
         const carouselItems = document.querySelectorAll('.carousel-item');
         const carouselDots = document.querySelectorAll('.carousel-dot');
 
+        // Function to move the carousel
         function moveCarousel(direction) {
             currentIndex += direction;
             if (currentIndex < 0) {
@@ -346,6 +410,7 @@
             updateCarousel();
         }
 
+        // Function to update the carousel position
         function updateCarousel() {
             const offset = -currentIndex * 100;
             carouselInner.style.transform = `translateX(${offset}%)`;
@@ -354,6 +419,47 @@
             });
         }
 
+        // Add event listeners for touch and mouse scroll
+        let startX = 0;
+        let isDragging = false;
+
+        carouselInner.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.pageX;
+        });
+
+        carouselInner.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const currentX = e.pageX;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) { // Sensitivity threshold
+                moveCarousel(diff > 0 ? 1 : -1);
+                isDragging = false;
+            }
+        });
+
+        carouselInner.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        carouselInner.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        // Touch events for mobile devices
+        carouselInner.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX;
+        });
+
+        carouselInner.addEventListener('touchmove', (e) => {
+            const currentX = e.touches[0].pageX;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) { // Sensitivity threshold
+                moveCarousel(diff > 0 ? 1 : -1);
+            }
+        });
+
+        // Apply and Reset button functionality
         document.querySelector('.apply').addEventListener('click', function() {
             const profitElement = document.querySelector('.carousel-item[data-index="0"] p:first-child');
             const volumeLotsElement = document.querySelector('.carousel-item[data-index="1"] p:first-child');
@@ -374,6 +480,7 @@
             volumeMlnElement.textContent = '0.0000';
         });
 
+        // Dot navigation
         carouselDots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 currentIndex = index;
